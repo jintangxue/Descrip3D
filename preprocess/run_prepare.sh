@@ -114,3 +114,49 @@ python preprocess/prepare_sqa3d_annos.py
 #     --version "$version" \
 #     --train_iou_thres "$train_iou_thres" \
 #     --max_obj_num "$max_obj_num"
+
+scan_root="$scannet_dir"
+image_root="/path/to/scannet_2d"            
+mask3d_root="$processed_data_dir/pcd_all"   
+intrinsics_path="/path/to/intrinsics.txt"   
+
+proj_dir="./projected_vis"
+anno_dir="./annotations"
+mkdir -p "$proj_dir" "$anno_dir"
+
+vlm_model="liuhaotian/llava-v1.5-7b"
+gpus="0,1"
+
+raw_desc_json="$anno_dir/object_descriptions_all_scenes.json"
+clean_desc_json="$anno_dir/object_descriptions_all_scenes_cleaned.json"
+tagged_desc_json="$anno_dir/object_descriptions_with_obj_tags.json"
+text_feats_pt="$anno_dir/object_descriptions_with_obj_tags.pt"
+
+python preprocess/generate_object_lists.py \
+  --scan_root "$SCAN_ROOT" \
+  --image_root "$IMAGE_ROOT" \
+  --mask3d_root "$MASK3D_ROOT" \
+  --intrinsics_path "$INTRINSICS" \
+  --output_dir "$PROJ_DIR" \
+  --num_workers 16
+
+python preprocess/generate_descriptions_multi_gpu.py \
+  --json-dir "$PROJ_DIR" \
+  --image-root "$PROJ_DIR" \
+  --output-file "$RAW_DESC_JSON" \
+  --model "$VLM_MODEL" \
+  --gpus "$GPUS"
+
+python preprocess/description_refine.py \
+  --input "$RAW_DESC_JSON" \
+  --output "$CLEAN_DESC_JSON"
+
+python preprocess/replace_object_names_with_ids.py \
+  --desc "$CLEAN_DESC_JSON" \
+  --json-dir "$PROJ_DIR" \
+  --output "$TAGGED_DESC_JSON"
+
+python preprocess/prepare_mask3d_text_feat.py \
+  --desc_json "$CLEAN_DESC_JSON" \
+  --output "$TEXT_FEATS_PT"
+
