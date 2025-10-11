@@ -1,4 +1,4 @@
-# Descrip3D: Object‑Level Text Descriptions for 3D Scene Understanding
+# Descrip3D: Enhancing Large Language Model-based 3D Scene Understanding with Object-Level Text Descriptions
 
 > We add a lightweight **object-level textual relational modality** to 3D/2D object tokens and inject it at two levels, embedding fusion and prompt suffix, to boost 3D grounding, captioning, and QA without task‑specific heads.
 <p align="left">
