@@ -90,7 +90,7 @@ Descrip3D extends Chat‑Scene by introducing **object‑level textual descripti
 
 - Inference
   
-  - Modify [run.sh](scripts/run.sh): (We provide the pretrained checkpoints in [Google Drive](https://drive.google.com/drive/folders/1mHlUgBYm_9tWOr0IyTqN62pTH8_7J4CH?usp=drive_link))
+  - Modify [run.sh](scripts/run.sh): (We provide pretrained checkpoints trained for 2 and 3 epochs on [Google Drive](https://drive.google.com/drive/folders/1mHlUgBYm_9tWOr0IyTqN62pTH8_7J4CH?usp=drive_link))
   
     ```python
     val_tag="scanrefer#scan2cap#scanqa#sqa3d#multi3dref"
