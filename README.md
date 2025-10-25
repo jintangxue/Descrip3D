@@ -43,8 +43,8 @@ Descrip3D extends Chat‑Scene by introducing **object‑level textual descripti
 - Prepare the environment:
   
   ```shell
-  conda create -n chat-scene python=3.9.17
-  conda activate chat-scene
+  conda create -n descrip3d python=3.9.17
+  conda activate descrip3d
   conda install pytorch==2.2.1 torchvision==0.17.1 torchaudio==2.2.1 pytorch-cuda=11.8 -c pytorch -c nvidia
   pip install -r requirements.txt
   ```
